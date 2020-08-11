@@ -4,7 +4,7 @@ version := "1.0.0"
 
 scalaVersion := "2.13.3"
 
-crossScalaVersions in ThisBuild := List("2.13.3", "2.12.12")
+crossScalaVersions := List("2.13.3", "2.12.12")
 scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-feature")
 
 publishTo in ThisBuild := sonatypePublishTo.value
@@ -25,5 +25,6 @@ developers in ThisBuild := List(
 )
 
 libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
+libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.6"
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.0"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.0" % "test"
