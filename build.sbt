@@ -1,5 +1,5 @@
 name := "moduload"
-organization := "org.matthicks"
+organization := "com.outr"
 version := "1.0.0-SNAPSHOT"
 
 scalaVersion := "2.13.3"

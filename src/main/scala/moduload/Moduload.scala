@@ -1,5 +1,7 @@
 package moduload
 
+import java.util.concurrent.atomic.AtomicBoolean
+
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 import scala.jdk.CollectionConverters._
@@ -34,6 +36,7 @@ trait Moduload {
  * a Future that represents all modules loaded state.
  */
 object Moduload {
+  private val loaded = new AtomicBoolean(false)
   private var map = Map.empty[Moduload, Future[Unit]]
 
   private def load(module: Moduload)(implicit ec: ExecutionContext): Future[Unit] = synchronized {
@@ -51,7 +54,7 @@ object Moduload {
     }
   }
 
-  def load()(implicit ec: ExecutionContext): Future[Unit] = {
+  def load()(implicit ec: ExecutionContext): Future[Unit] = if (loaded.compareAndSet(false, true)) {
     val lines = getClass.getClassLoader.getResources("moduload.list").asScala.toList.flatMap { url =>
       val source = Source.fromURL(url)
       try {
@@ -71,5 +74,7 @@ object Moduload {
       load(module)
     }
     Future.sequence(futures).map(_ => ())
+  } else {
+    Future.successful(())
   }
 }
