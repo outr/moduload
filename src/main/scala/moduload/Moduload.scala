@@ -67,7 +67,7 @@ object Moduload {
       import scala.reflect.runtime._
 
       val clazz = Class.forName(className)
-      val rootMirror = universe.runtimeMirror(Thread.currentThread().getContextClassLoader)
+      val rootMirror = universe.runtimeMirror(getClass.getClassLoader)
       val moduleSymbol = rootMirror.moduleSymbol(clazz)
       val moduleMirror = rootMirror.reflectModule(moduleSymbol)
       val module = moduleMirror.instance.asInstanceOf[Moduload]
