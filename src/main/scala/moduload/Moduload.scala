@@ -64,13 +64,10 @@ object Moduload {
       }
     }
     val futures = lines.map { className =>
-      import scala.reflect.runtime._
-
       val clazz = Class.forName(className)
-      val rootMirror = universe.runtimeMirror(getClass.getClassLoader)
-      val moduleSymbol = rootMirror.moduleSymbol(clazz)
-      val moduleMirror = rootMirror.reflectModule(moduleSymbol)
-      val module = moduleMirror.instance.asInstanceOf[Moduload]
+      val field = clazz.getField("MODULE$")
+      val module = field.get(None.orNull).asInstanceOf[Moduload]
+
       load(module)
     }
     Future.sequence(futures).map(_ => ())

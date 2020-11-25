@@ -1,10 +1,10 @@
 name := "moduload"
 organization := "com.outr"
-version := "1.0.1"
+version := "1.0.2-SNAPSHOT"
 
 scalaVersion := "2.13.3"
 
-crossScalaVersions := List("2.13.3", "2.12.12")
+crossScalaVersions := List("2.13.3", "2.12.12", "2.11.12", "0.27.0-RC1")
 scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-feature")
 
 publishTo in ThisBuild := sonatypePublishTo.value
@@ -24,7 +24,11 @@ developers in ThisBuild := List(
   Developer(id="darkfrog", name="Matt Hicks", email="matt@matthicks.com", url=url("http://matthicks.com"))
 )
 
-libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
-libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.6"
-libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.0"
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.0" % "test"
+//libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
+libraryDependencies ++= (if (isDotty.value) {
+  Nil
+} else {
+  List("org.scala-lang.modules" %% "scala-collection-compat" % "2.2.0")
+})
+//libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.2.0"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.2" % "test"
