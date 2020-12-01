@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 import scala.jdk.CollectionConverters._
+import scala.math.Ordering.Implicits._
 
 /**
  * Modules to be loaded should implement this trait
@@ -27,6 +28,11 @@ trait Moduload {
    * @param t the thrown exception
    */
   def error(t: Throwable): Unit
+
+  /**
+   * Used to sort highest priority to lowest
+   */
+  def priority: Priority = Priority.Normal
 }
 
 /**
@@ -63,17 +69,16 @@ object Moduload {
         source.close()
       }
     }
-    val futures = lines.map { className =>
+    val modules = lines.map { className =>
       val cn = className match {
         case n if n.endsWith("$") => n
         case n => s"$n$$"
       }
       val clazz = Class.forName(cn)
       val field = clazz.getField("MODULE$")
-      val module = field.get(None.orNull).asInstanceOf[Moduload]
-
-      load(module)
-    }
+      field.get(None.orNull).asInstanceOf[Moduload]
+    }.sortBy(_.priority)
+    val futures = modules.map(load)
     Future.sequence(futures).map(_ => ())
   } else {
     Future.successful(())

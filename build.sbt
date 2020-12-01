@@ -1,10 +1,10 @@
 name := "moduload"
 organization := "com.outr"
-version := "1.0.2"
+version := "1.0.3-SNAPSHOT"
 
-scalaVersion := "2.13.3"
+scalaVersion := "2.13.4"
 
-crossScalaVersions := List("2.13.3", "2.12.12", "2.11.12", "0.27.0-RC1")
+crossScalaVersions := List("2.13.4", "2.12.12", "2.11.12", "0.27.0-RC1")
 scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-feature")
 
 publishTo in ThisBuild := sonatypePublishTo.value
