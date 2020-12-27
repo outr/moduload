@@ -16,11 +16,8 @@ trait Moduload {
   /**
    * Loads the module. Should not be invoked directly. Calling the companion object's load method should invoke this
    * method exactly once.
-   *
-   * @param ec the execution context to use for loading
-   * @return Future[Unit]
    */
-  def load()(implicit ec: ExecutionContext): Future[Unit]
+  def load(): Unit
 
   /**
    * Called when an exception is thrown from load.
@@ -43,24 +40,20 @@ trait Moduload {
  */
 object Moduload {
   private val loaded = new AtomicBoolean(false)
-  private var map = Map.empty[Moduload, Future[Unit]]
+  private var set = Set.empty[Moduload]
 
-  private def load(module: Moduload)(implicit ec: ExecutionContext): Future[Unit] = synchronized {
-    map.get(module) match {
-      case Some(future) => future
-      case None => try {
-        val future = module.load().recover {
-          case t: Throwable => module.error(t)
-        }
-        map += module -> future
-        future
+  private def load(module: Moduload): Unit = synchronized {
+    if (!set.contains(module)) {
+      try {
+        module.load()
+        set += module
       } catch {
-        case t: Throwable => Future.successful(module.error(t))
+        case t: Throwable => module.error(t)
       }
     }
   }
 
-  def load()(implicit ec: ExecutionContext): Future[Unit] = if (loaded.compareAndSet(false, true)) {
+  def load(): Unit = if (loaded.compareAndSet(false, true)) {
     val lines = getClass.getClassLoader.getResources("moduload.list").asScala.toList.flatMap { url =>
       val source = Source.fromURL(url)
       try {
@@ -78,9 +71,6 @@ object Moduload {
       val field = clazz.getField("MODULE$")
       field.get(None.orNull).asInstanceOf[Moduload]
     }.sortBy(_.priority)
-    val futures = modules.map(load)
-    Future.sequence(futures).map(_ => ())
-  } else {
-    Future.successful(())
+    modules.foreach(load)
   }
 }
