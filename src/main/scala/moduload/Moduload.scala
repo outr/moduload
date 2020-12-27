@@ -2,10 +2,8 @@ package moduload
 
 import java.util.concurrent.atomic.AtomicBoolean
 
-import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 import scala.jdk.CollectionConverters._
-import scala.math.Ordering.Implicits._
 
 /**
  * Modules to be loaded should implement this trait
