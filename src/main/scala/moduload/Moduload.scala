@@ -1,9 +1,9 @@
 package moduload
 
 import java.util.concurrent.atomic.AtomicBoolean
-
 import scala.io.Source
 import scala.jdk.CollectionConverters._
+import scala.util.Try
 
 /**
  * Modules to be loaded should implement this trait
@@ -60,14 +60,21 @@ object Moduload {
         source.close()
       }
     }
-    val modules = lines.map { className =>
+    val modules = lines.flatMap { className =>
       val cn = className match {
         case n if n.endsWith("$") => n
         case n => s"$n$$"
       }
-      val clazz = Class.forName(cn)
-      val field = clazz.getField("MODULE$")
-      field.get(None.orNull).asInstanceOf[Moduload]
+      Try(Class.forName(cn)).toOption match {
+        case Some(clazz) => {
+          val field = clazz.getField("MODULE$")
+          Some(field.get(None.orNull).asInstanceOf[Moduload])
+        }
+        case None => {
+          println(s"WARNING: Moduload unable to find class: $className")
+          None
+        }
+      }
     }.sortBy(_.priority)
     modules.foreach(load)
   }

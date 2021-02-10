@@ -4,8 +4,6 @@ import moduload.{Moduload, Priority}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-import scala.concurrent.{ExecutionContext, Future}
-
 class ModuloadSpec extends AnyWordSpec with Matchers {
   "Moduload" should {
     "load three modules" in {
