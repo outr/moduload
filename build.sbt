@@ -1,6 +1,6 @@
 name := "moduload"
 organization := "com.outr"
-version := "1.1.1-SNAPSHOT"
+version := "1.1.1"
 
 scalaVersion := "2.13.4"
 
