@@ -1,10 +1,10 @@
 name := "moduload"
 organization := "com.outr"
-version := "1.1.1"
+version := "1.1.2-SNAPSHOT"
 
 scalaVersion := "2.13.4"
 
-crossScalaVersions := List("2.13.4", "2.12.12", "2.11.12", "3.0.0-M3")
+crossScalaVersions := List("2.13.4", "2.12.12", "2.11.12", "3.0.0-RC1")
 scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-feature")
 
 publishTo in ThisBuild := sonatypePublishTo.value
@@ -29,4 +29,4 @@ libraryDependencies ++= (if (isDotty.value) {
 } else {
   List("org.scala-lang.modules" %% "scala-collection-compat" % "2.4.2")
 })
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.3" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.4" % "test"
