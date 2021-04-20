@@ -29,4 +29,4 @@ libraryDependencies ++= (if (isDotty.value) {
 } else {
   List("org.scala-lang.modules" %% "scala-collection-compat" % "2.4.3")
 })
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.4" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.6" % "test"
