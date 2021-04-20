@@ -1,26 +1,26 @@
 name := "moduload"
 organization := "com.outr"
-version := "1.1.2"
+version := "1.1.3-SNAPSHOT"
 
-scalaVersion := "2.13.4"
+scalaVersion := "2.13.5"
 
-crossScalaVersions := List("2.13.4", "2.12.12", "2.11.12", "3.0.0-RC1")
-scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-feature")
+crossScalaVersions := List("2.13.5", "2.12.13", "2.11.12", "3.0.0-RC1", "3.0.0-RC2")
+ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
-publishTo in ThisBuild := sonatypePublishTo.value
-publishConfiguration in ThisBuild := publishConfiguration.value.withOverwrite(true)
-sonatypeProfileName in ThisBuild := "com.outr"
-publishMavenStyle in ThisBuild := true
-licenses in ThisBuild := Seq("MIT" -> url("https://github.com/outr/moduload/blob/master/LICENSE"))
-sonatypeProjectHosting in ThisBuild := Some(xerial.sbt.Sonatype.GitHubHosting("outr", "moduload", "matt@outr.com"))
-homepage in ThisBuild := Some(url("https://github.com/outr/moduload"))
-scmInfo in ThisBuild := Some(
+ThisBuild / publishTo := sonatypePublishTo.value
+ThisBuild / publishConfiguration := publishConfiguration.value.withOverwrite(true)
+ThisBuild / sonatypeProfileName := "com.outr"
+ThisBuild / publishMavenStyle := true
+ThisBuild / licenses := Seq("MIT" -> url("https://github.com/outr/moduload/blob/master/LICENSE"))
+ThisBuild / sonatypeProjectHosting := Some(xerial.sbt.Sonatype.GitHubHosting("outr", "moduload", "matt@outr.com"))
+ThisBuild / homepage := Some(url("https://github.com/outr/moduload"))
+ThisBuild / scmInfo := Some(
   ScmInfo(
     url("https://github.com/outr/moduload"),
     "scm:git@github.com:outr/moduload.git"
   )
 )
-developers in ThisBuild := List(
+ThisBuild / developers := List(
   Developer(id="darkfrog", name="Matt Hicks", email="matt@matthicks.com", url=url("http://matthicks.com"))
 )
 
@@ -29,4 +29,6 @@ libraryDependencies ++= (if (isDotty.value) {
 } else {
   List("org.scala-lang.modules" %% "scala-collection-compat" % "2.4.3")
 })
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.6" % "test"
+libraryDependencies += "com.outr" %% "testy" % "1.0.3" % Test
+
+testFrameworks += new TestFramework("munit.Framework")

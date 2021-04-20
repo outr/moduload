@@ -1,10 +1,9 @@
 package spec
 
 import moduload.{Moduload, Priority}
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
+import testy._
 
-class ModuloadSpec extends AnyWordSpec with Matchers {
+class ModuloadSpec extends Spec {
   "Moduload" should {
     "load three modules" in {
       Moduload.load()
