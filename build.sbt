@@ -27,7 +27,7 @@ ThisBuild / developers := List(
 libraryDependencies ++= (if (isDotty.value) {
   Nil
 } else {
-  List("org.scala-lang.modules" %% "scala-collection-compat" % "2.4.3")
+  List("org.scala-lang.modules" %% "scala-collection-compat" % "2.4.4")
 })
 libraryDependencies += "com.outr" %% "testy" % "1.0.5" % Test
 
