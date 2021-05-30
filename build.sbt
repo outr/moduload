@@ -25,6 +25,6 @@ ThisBuild / developers := List(
 )
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.4.4"
-libraryDependencies += "com.outr" %% "testy" % "1.0.6" % Test
+libraryDependencies += "com.outr" %% "testy" % "1.0.7" % Test
 
 testFrameworks += new TestFramework("munit.Framework")
