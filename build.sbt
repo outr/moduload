@@ -24,7 +24,7 @@ ThisBuild / developers := List(
   Developer(id="darkfrog", name="Matt Hicks", email="matt@matthicks.com", url=url("http://matthicks.com"))
 )
 
-libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.4.4"
+libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.5.0"
 libraryDependencies += "com.outr" %% "testy" % "1.0.6" % Test
 
 testFrameworks += new TestFramework("munit.Framework")
