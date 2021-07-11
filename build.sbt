@@ -4,7 +4,7 @@ version := "1.1.5"
 
 scalaVersion := "2.13.5"
 
-crossScalaVersions := List("2.13.5", "2.12.13", "2.11.12", "3.0.0")
+crossScalaVersions := List("2.13.5", "2.12.13", "2.11.12", "3.0.1")
 ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 ThisBuild / publishTo := sonatypePublishTo.value
