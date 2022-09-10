@@ -1,10 +1,10 @@
 name := "moduload"
 organization := "com.outr"
-version := "1.1.5"
+version := "1.1.6-SNAPSHOT"
 
-scalaVersion := "2.13.5"
+scalaVersion := "2.13.8"
 
-crossScalaVersions := List("2.13.5", "2.12.13", "2.11.12", "3.0.1")
+crossScalaVersions := List("2.13.8", "2.12.16", "2.11.12", "3.2.0")
 ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 ThisBuild / publishTo := sonatypePublishTo.value
@@ -21,10 +21,8 @@ ThisBuild / scmInfo := Some(
   )
 )
 ThisBuild / developers := List(
-  Developer(id="darkfrog", name="Matt Hicks", email="matt@matthicks.com", url=url("http://matthicks.com"))
+  Developer(id="darkfrog", name="Matt Hicks", email="matt@matthicks.com", url=url("https://matthicks.com"))
 )
 
-libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.5.0"
-libraryDependencies += "com.outr" %% "testy" % "1.0.6" % Test
-
-testFrameworks += new TestFramework("munit.Framework")
+libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.8.1"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.13" % Test
