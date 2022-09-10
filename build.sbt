@@ -1,16 +1,16 @@
 name := "moduload"
 organization := "com.outr"
-version := "1.1.6-SNAPSHOT"
+version := "1.1.6"
 
 scalaVersion := "2.13.8"
 
 crossScalaVersions := List("2.13.8", "2.12.16", "2.11.12", "3.2.0")
 ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
+ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
+ThisBuild / sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 ThisBuild / publishTo := sonatypePublishTo.value
-ThisBuild / publishConfiguration := publishConfiguration.value.withOverwrite(true)
 ThisBuild / sonatypeProfileName := "com.outr"
-ThisBuild / publishMavenStyle := true
 ThisBuild / licenses := Seq("MIT" -> url("https://github.com/outr/moduload/blob/master/LICENSE"))
 ThisBuild / sonatypeProjectHosting := Some(xerial.sbt.Sonatype.GitHubHosting("outr", "moduload", "matt@outr.com"))
 ThisBuild / homepage := Some(url("https://github.com/outr/moduload"))
