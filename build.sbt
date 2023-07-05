@@ -11,7 +11,7 @@ crossScalaVersions := List(
   
   "2.11.12",
   
-  "3.2.0"
+  "3.2.2"
 )
 ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
