@@ -25,4 +25,4 @@ ThisBuild / developers := List(
 )
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.8.1"
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.13" % Test
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.16" % Test
