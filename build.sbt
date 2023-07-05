@@ -2,9 +2,17 @@ name := "moduload"
 organization := "com.outr"
 version := "1.1.6"
 
-scalaVersion := "2.13.8"
+scalaVersion := "2.13.11"
 
-crossScalaVersions := List("2.13.8", "2.12.16", "2.11.12", "3.2.0")
+crossScalaVersions := List(
+  "2.13.11",
+  
+  "2.12.18",
+  
+  "2.11.12",
+  
+  "3.2.2"
+)
 ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
@@ -24,5 +32,6 @@ ThisBuild / developers := List(
   Developer(id="darkfrog", name="Matt Hicks", email="matt@matthicks.com", url=url("https://matthicks.com"))
 )
 
-libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.8.1"
+libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.11.0"
+
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.16" % Test
