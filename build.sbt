@@ -4,7 +4,7 @@ version := "1.1.6"
 
 scalaVersion := "2.13.8"
 
-crossScalaVersions := List("2.13.8", "2.12.16", "2.11.12", "3.2.0")
+crossScalaVersions := List("2.13.8", "2.12.18", "2.11.12", "3.2.0")
 ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
