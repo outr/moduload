@@ -1,6 +1,6 @@
 name := "moduload"
 organization := "com.outr"
-version := "1.1.6"
+version := "1.1.7-SNAPSHOT"
 
 scalaVersion := "2.13.11"
 
@@ -11,7 +11,7 @@ crossScalaVersions := List(
   
   "2.11.12",
   
-  "3.2.2"
+  "3.3.0"
 )
 ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
