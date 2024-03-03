@@ -2,7 +2,7 @@ name := "moduload"
 organization := "com.outr"
 version := "1.1.7"
 
-scalaVersion := "2.13.11"
+scalaVersion := "2.13.13"
 
 crossScalaVersions := List(
   "2.13.11",
