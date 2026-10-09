@@ -1,6 +1,6 @@
 name := "moduload"
 organization := "com.outr"
-version := "1.1.7"
+version := "1.1.8"
 
 scalaVersion := "2.13.11"
 
@@ -15,9 +15,8 @@ crossScalaVersions := List(
 )
 ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
-ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
-ThisBuild / sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
-ThisBuild / publishTo := sonatypePublishTo.value
+ThisBuild / sonatypeCredentialHost := xerial.sbt.Sonatype.sonatypeCentralHost
+ThisBuild / publishTo := sonatypePublishToBundle.value
 ThisBuild / sonatypeProfileName := "com.outr"
 ThisBuild / licenses := Seq("MIT" -> url("https://github.com/outr/moduload/blob/master/LICENSE"))
 ThisBuild / sonatypeProjectHosting := Some(xerial.sbt.Sonatype.GitHubHosting("outr", "moduload", "matt@outr.com"))
@@ -35,3 +34,5 @@ ThisBuild / developers := List(
 libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.11.0"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.16" % Test
+
+mimaPreviousArtifacts := Set(organization.value %% name.value % "1.1.7")

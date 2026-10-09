@@ -1,9 +1,9 @@
 package moduload
 
+import java.util.concurrent.{CountDownLatch, TimeUnit}
 import java.util.concurrent.atomic.AtomicBoolean
 import scala.io.Source
 import scala.jdk.CollectionConverters._
-import scala.util.Try
 
 /**
  * Modules to be loaded should implement this trait
@@ -37,7 +37,14 @@ trait Moduload {
  * a Future that represents all modules loaded state.
  */
 object Moduload {
+  /**
+   * How long a concurrent caller of `load()` waits for the load already in progress on another thread.
+   */
+  private val ConcurrentLoadWaitMillis: Long = 30000L
+
   private val loaded = new AtomicBoolean(false)
+  private val finished = new CountDownLatch(1)
+  @volatile private var loadingThread: Thread = null
   private var set = Set.empty[Moduload]
 
   private def load(module: Moduload): Unit = synchronized {
@@ -51,7 +58,26 @@ object Moduload {
     }
   }
 
+  /**
+   * Loads every module listed in the classpath's `moduload.list` files, once per JVM. A caller on another thread while
+   * the load is in progress waits for it to finish (up to 30 seconds), so a return means every module has been
+   * offered. A call from the loading thread itself (a module's load reaching back into Moduload) returns at once.
+   */
   def load(): Unit = if (loaded.compareAndSet(false, true)) {
+    loadingThread = Thread.currentThread()
+    try {
+      loadAll()
+    } finally {
+      loadingThread = null
+      finished.countDown()
+    }
+  } else if (Thread.currentThread() ne loadingThread) {
+    if (!finished.await(ConcurrentLoadWaitMillis, TimeUnit.MILLISECONDS)) {
+      println(s"WARNING: Moduload load still in progress on another thread after ${ConcurrentLoadWaitMillis}ms; continuing")
+    }
+  }
+
+  private def loadAll(): Unit = {
     val lines = getClass.getClassLoader.getResources("moduload.list").asScala.toList.flatMap { url =>
       val source = Source.fromURL(url)
       try {
@@ -65,15 +91,17 @@ object Moduload {
         case n if n.endsWith("$") => n
         case n => s"$n$$"
       }
-      Try(Class.forName(cn)).toOption match {
-        case Some(clazz) => {
-          val field = clazz.getField("MODULE$")
-          Some(field.get(None.orNull).asInstanceOf[Moduload])
-        }
-        case None => {
+      try {
+        val clazz = Class.forName(cn)
+        Some(clazz.getField("MODULE$").get(None.orNull).asInstanceOf[Moduload])
+      } catch {
+        case _: ClassNotFoundException =>
           println(s"WARNING: Moduload unable to find class: $className")
           None
-        }
+        case t: VirtualMachineError => throw t
+        case t: Throwable =>
+          println(s"WARNING: Moduload unable to initialize $className: $t")
+          None
       }
     }.sortBy(_.priority)
     modules.foreach(load)
